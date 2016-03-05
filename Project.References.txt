@@ -1,0 +1,38 @@
+Weather API:
+http://stackoverflow.com/questions/1474489/python-weather-api
+Getting a free API KEY for OWM:
+http://openweathermap.org/price
+
+Playing music:
+http://www.pygame.org/docs/ref/music.html
+
+Pausing Music:
+http://www.pygame.org/docs/ref/music.html#pygame.mixer.music.pause
+
+Change Cursor:
+https://gist.github.com/niquefaDiego/4415397
+
+Toggle a value:
+http://stackoverflow.com/questions/8381735/toggle-a-value-in-python
+
+Cursor:
+https://gist.github.com/niquefaDiego/4415397
+
+Yahoo weather API:
+https://yweather.readthedocs.org/en/v0.1/api.html#module-yweather
+
+Adding mew items to the dictionary:
+http://stackoverflow.com/questions/6416131/python-add-new-item-to-dictionary
+
+Ignoring Errors:
+http://stackoverflow.com/questions/574730/python-how-to-ignore-an-exception-and-proceed
+
+wiki api:
+https://github.com/richardasaurus/wiki-api
+
+GET RANDOM ARTICLE WIKI:
+https://gist.github.com/ghl3/4556336
+
+Removing HTML tags from a string in python:
+http://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
+
