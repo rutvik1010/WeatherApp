@@ -3,19 +3,16 @@ import yweather
 import urllib2
 import re
 from wikiapi import WikiApi
-
-
 import time
-# Yahoo weather API Data extraction
+
+
 pygame.init()
 
-#   Initial Setup
+# Initial Window Setup
 display_prop = (800, 600)
 main_display = pygame.display.set_mode(display_prop)
 pygame.display.set_caption("Board Y")
 clock = pygame.time.Clock()
-
-#pygame.mouse.set_visible(False)     # Make the mouse invisible
 
 cursor_image = pygame.image.load('CR_Cursor.png')
 weather_image = pygame.image.load('weather_0.png')
@@ -29,14 +26,10 @@ blue = (0, 0, 255)
 green = (0, 200, 0)
 bright_green = (0, 255, 0)
 
-
 TAG_RE = re.compile(r'<[^>]+>')
-
 
 def remove_tags(text):
     return TAG_RE.sub('', text)
-
-
 
 def endlinefunction(value1, data_list,index1):
         if index1 >= len(value1):
@@ -48,12 +41,10 @@ def endlinefunction(value1, data_list,index1):
         new_valu2 = value1[index1:len(value1)]
         data_list.append(new_valu1)
         endlinefunction(new_valu2, data_list, index1)
-
-
+        
 def text_surface_function(text, font, text_color):
     text_surface = font.render(text, True, text_color)
     return text_surface, text_surface.get_rect()
-
 
 def drawbutton(color, x, y, w, h, font_size, text, text_color):
     pygame.draw.rect(main_display, color, (x, y, w, h))
@@ -61,7 +52,6 @@ def drawbutton(color, x, y, w, h, font_size, text, text_color):
     button_surface, button_rectangle = text_surface_function(text, button_font, text_color)
     button_rectangle.center = (x + w / 2, y + h / 2)
     main_display.blit(button_surface, button_rectangle)
-
 
 def data_display(font_size, text, font_color, x, y):
     try:
@@ -73,16 +63,11 @@ def data_display(font_size, text, font_color, x, y):
     except:
                 pass
 
-
 def main():
-
     status = True
-
     pygame.mixer.music.play(-1)
     music_status = 1
-
 #   Create a wikiapi instance
-
     wiki_status = 1
     wiki_instance = WikiApi()
     wiki_instance = WikiApi({'locale': 'en'})
@@ -92,7 +77,6 @@ def main():
     data_list = []
 
 #   Load weather data into lists and dictionaries
-
     weather_location = 0
     connector = yweather.Client()
     weather_id_ny = connector.fetch_woeid('New York')
@@ -131,7 +115,6 @@ def main():
                     'Condition': weather_data_hyd['condition']['text']})
     keys_list_hyd = data_dict_hyd.keys()
 
-
     while status:
             main_display.fill(black)
             pointer_location = pygame.mouse.get_pos()
@@ -139,11 +122,11 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    
 #   Music Button
                 if 325 < pointer_location[0] < 405 and 20 < pointer_location[1] < 50:
                     if pointer_click[0] == 1:
                         wiki_status = 1
-
                 if 700 < pointer_location[0] < 780 and 20 < pointer_location[1] < 50:
                     if pointer_click[0] == 1:
                         music_status = not music_status
@@ -152,17 +135,16 @@ def main():
                         else:
                             pygame.mixer.music.unpause()
 #   New York  Button Check
-
                 if 20 < pointer_location[0] < 80 and 20 < pointer_location[1] < 50:
                     if pointer_click[0] == 1:
                         weather_location = 2
+                    
 #   Buffalo  Button Check
-
                 if 100 < pointer_location[0] < 160 and 20 < pointer_location[1] < 50:
                     if pointer_click[0] == 1:
                         weather_location = 1
+                    
 #   Hyderabad  Button Check
-
                 if 180 < pointer_location[0] < 240 and 20 < pointer_location[1] < 50:
                     if pointer_click[0] == 1:
                         weather_location = 0
@@ -170,9 +152,8 @@ def main():
                 main_display.blit(weather_image, (0,0))
             except:
                 pass
-
+            
 #   Data Display
-
             if weather_location == 0:
                 data_display(110, data_dict_hyd['Current Temperature'], white, 80, 160)  # Temperature number
                 data_display(20, "Deg C", white, 180, 130)                           # Degree
@@ -203,8 +184,8 @@ def main():
                 data_display(15, keys_list_ny[4] + " : " + data_dict_ny['Sunrise'], white, 95, 400)   # Sunrise
                 data_display(15, keys_list_ny[0] + " : " + data_dict_ny['Sunset'], white, 95, 440)    # Sunset
                 data_display(15, keys_list_ny[3] + " : " + data_dict_ny['Wind'], white, 95, 480)  # Wind Speed
+                
 #   Display Wiki Article
-
             if wiki_status == 1:
                 del data_list[:]
                 wiki_status = 0
@@ -223,8 +204,8 @@ def main():
                 except (urllib2.HTTPError, urllib2.URLError):
                     print "Failed to get article"
                     raise
+                    
 #   Buttons and Division Display
-
             pygame.draw.rect(main_display, white, (300, 0, 5, 600))
             pygame.draw.rect(main_display, white, (300, 70, 500, 5))
             drawbutton(wood, 700, 20, 80, 30, 10, "Toggle Music", black)
@@ -232,18 +213,16 @@ def main():
             drawbutton(white, 100, 20, 60, 30, 10, "Buffalo", black)
             drawbutton(white, 180, 20, 60, 30, 10, "Hyderabad", black)
             drawbutton(wood, 325, 20, 80, 30, 10, "Next Article", black)
+            
 #   Cursor Display
-
-            #main_display.blit(cursor_image, (pointer_location[0], pointer_location[1]))
-
             data_display(15, wiki_data.heading, wood, 540, 130)
             y_cood = 150
             j = 25
             for i in range(0, len(data_list)):
                 y_cood = y_cood + j
                 data_display(10, data_list[i], black, 540, y_cood)
-
             clock.tick(100)
             pygame.display.flip()
 
-main()
+if __name__ == "__main__":
+    main()
